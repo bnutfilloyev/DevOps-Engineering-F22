@@ -71,7 +71,7 @@ $ pytest
     
     ========================================= 1 passed in 0.12s ==========================================
 ```
-![](assets/Screen Shot 2022-09-13 at 10.34.02.png)
+![Pytest Image](assets/Screen Shot 2022-09-13 at 10.34.02.png)
 
 ### **Build the Docker Image**
 
