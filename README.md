@@ -48,7 +48,8 @@ You should now have a directory structure like:
 .
 ├── .github
 │   └── workflows
-│       └── main.yml
+│       └── build-docker.yaml
+│       └── dep-lint-test.yaml
 ├── app_python
 │   ├── __init__.py
 │   ├── test_main.py
