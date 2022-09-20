@@ -2,11 +2,11 @@ FROM python:3.9
 
 WORKDIR /code
 
-COPY requirements.txt /code/requirements.txt
+COPY Lab /code/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-COPY ./app_python /code/app
+COPY Lab /code/app
 
 EXPOSE 80
 
