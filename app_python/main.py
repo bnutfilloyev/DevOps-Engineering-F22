@@ -2,7 +2,6 @@
 from fastapi import FastAPI
 from datetime import datetime
 from pytz import timezone
-import uvicorn
 
 app = FastAPI()
 
@@ -12,4 +11,3 @@ def read_root():
     """Return current time in Moscow."""
     moscow = timezone('Europe/Moscow')
     return {"Moscow time": datetime.now(moscow).strftime("%H:%M:%S")}
-
