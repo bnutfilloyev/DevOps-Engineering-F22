@@ -2,9 +2,13 @@ name: Continuous Integration
 
 on:
     push:
-        branches: [ lab3 ]
+        branches: 
+            - 'lab3'
+            - 'master'
     pull_request:
-        branches: [ master ]
+        branches: 
+            - 'lab3'
+            - 'master'
 
 jobs:
     build:
