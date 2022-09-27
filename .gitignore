@@ -129,3 +129,8 @@ dmypy.json
 .pyre/
 .DS_Store
 .idea/
+
+*.tfstate
+*.tfstate.backup
+*.lock.hcl
+!/terraform/*/.terraform/
