@@ -4,6 +4,7 @@ on:
     push:
         branches:
             - 'lab3'
+            - 'master'
 
 jobs:
     build:
