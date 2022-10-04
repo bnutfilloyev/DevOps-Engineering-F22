@@ -1,1 +1,1 @@
-token="YOUR TOKEN"
+token="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"
