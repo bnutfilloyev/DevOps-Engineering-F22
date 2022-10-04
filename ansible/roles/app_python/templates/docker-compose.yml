@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+    app:
+        image: yoshlikmedia/containerization_lesson:latest
+        container_name: bekhruz-devops-python-app
+        ports:
+            - "80:80"

@@ -1,0 +1,52 @@
+- name: Update
+  hosts: all
+  remote_user: ubuntu
+  become: yes
+  tasks:
+    - name: Update repositories cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Pip and the `docker` Python package
+      include_role:
+        name: geerlingguy.pip
+      vars:
+        pip_install_packages:
+          - docker
+          - docker-compose
+
+- name: Install Docker and Docker Compose
+  hosts: all
+  remote_user: ubuntu
+  roles:
+    - role: geerlingguy.docker
+      vars:
+        docker_package_state: present
+        docker_service_state: started
+        docker_service_enabled: yes
+        docker_users:
+          - ubuntu
+        docker_install_compose: yes
+        docker_compose_version: "1.29.2"
+      become: yes
+
+- name: Copy the Docker Compose file to the image
+  hosts: all
+  remote_user: ubuntu
+  roles:
+    - role: geerlingguy.docker
+      vars:
+        docker_compose_path: ../../docker-compose.yml
+        app_path: /app
+      become: yes
+
+- name: Start the application
+  hosts: all
+  remote_user: ubuntu
+  tasks:
+    - name: Reset the connection to allow the user group to apply
+      meta: reset_connection
+
+    - name: Create and start the service
+      community.docker.docker_compose:
+        project_src: /app

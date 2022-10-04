@@ -1,0 +1,64 @@
+---
+-   name: Install docker dependencies
+    apt:
+        update_cache: yes
+        name:
+            - "curl"
+            - "ca-certificates"
+            - "apt-transport-https"
+            - "software-properties-common"
+            - "gnupg-agent"
+        state: latest
+
+-   name: Import GPG key for docker repository in apt
+    apt_key:
+        id: "9DC858229FC7DD38854AE2D88D81803C0EBFCD88"
+        url: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
+        state: present
+
+-   name: Add apt docker repository
+    apt_repository:
+        repo: >
+            deb [arch={{ docker_ansible_architecture_map[ansible_architecture] }}] https://download.docker.com/linux/{{ ansible_distribution | lower }}
+            {{ ansible_distribution_release }}
+            stable
+        state: present
+
+-   name: Install docker
+    apt:
+        update_cache: yes
+        name:
+            - "containerd.io"
+            - "docker-ce"
+            - "docker-ce-cli"
+        state: latest
+
+-   name: Binary for docker-compose
+    get_url:
+        url: "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+        dest: /usr/local/bin/docker-compose
+        mode: u+x,g+x,o+x
+
+-   name: docker-compose executable symbolic link
+    file:
+        src: /usr/local/bin/docker-compose
+        dest: /usr/bin/docker-compose
+        state: link
+
+-   name: Create group docker
+    group:
+        name: docker
+        state: present
+    become: true
+
+-   name: Add user to docker group
+    user:
+        name: "{{ ansible_user }}"
+        groups:
+            - docker
+        append: yes
+        state: present
+    become: true
+    when:
+        - ansible_user is defined
+        - ansible_user != 'root'

@@ -1,0 +1,7 @@
+all:
+    hosts:
+        app:
+            ansible_host: ip  # Should be changed for your hosts
+            ansible_user: ubuntu
+
+    children: { }

@@ -1,0 +1,18 @@
+---
+-   name: Create a docker-compose directory
+    file:
+        path: "{{ docker_compose_dir }}"
+        state: directory
+
+-   name: Copy docker-compose.yml
+    template:
+        src: docker-compose.yml
+        dest: "{{ docker_compose_dir }}/docker-compose.yml"
+
+-   name: Pull and restart containers
+    docker_compose:
+        project_src: "{{ docker_compose_dir }}"
+        project_name: nikita-aleshchenko-devops
+        pull: yes
+        recreate: always
+        state: present
